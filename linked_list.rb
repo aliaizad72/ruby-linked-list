@@ -1,20 +1,34 @@
 # frozen_string_literal: true
 
 # class LinkedList; contains the whole list
-class LinkedList
+class LinkedList # rubocop:disable Metrics/ClassLength
   attr_accessor :head
 
   def initialize
     @head = nil
   end
 
+  def traverse(location = nil)
+    cursor = @head
+    cursor = cursor.next_node until cursor.next_node == location
+    cursor
+  end
+
+  def traverse_with_count(location = nil, start = 0)
+    i = start
+    cursor = @head
+    until cursor.next_node == location
+      cursor = cursor.next_node
+      i += 1
+    end
+    i
+  end
+
   def append(value)
     if head.nil?
       @head = Node.new(value)
     else
-      cursor = @head
-      cursor = cursor.next_node until cursor.next_node.nil?
-      cursor.next_node = Node.new(value)
+      tail.next_node = Node.new(value)
     end
   end
 
@@ -28,17 +42,11 @@ class LinkedList
     end
   end
 
-  def size # rubocop:disable Metrics/MethodLength
+  def size
     if head.nil?
       0
     else
-      i = 1
-      cursor = @head
-      until cursor.next_node.nil?
-        cursor = cursor.next_node
-        i += 1
-      end
-      i
+      traverse_with_count(nil, 1)
     end
   end
 
@@ -48,9 +56,7 @@ class LinkedList
     elsif size == 1
       @head
     else
-      cursor = @head
-      cursor = cursor.next_node until cursor.next_node.nil?
-      cursor
+      traverse(nil)
     end
   end
 
@@ -69,10 +75,7 @@ class LinkedList
 
   def pop
     to_delete = tail
-
-    new_tail = @head
-    new_tail = new_tail.next_node until new_tail.next_node == to_delete
-
+    new_tail = traverse(to_delete)
     new_tail.next_node = nil
   end
 
@@ -112,6 +115,11 @@ class LinkedList
   end
 
   def insert_at(value, index) # rubocop:disable Metrics/MethodLength
+    if index >= size || index < -1
+      puts 'No such index'
+      return
+    end
+
     case index
     when 0
       prepend(value)
@@ -127,8 +135,13 @@ class LinkedList
       new_node.next_node = old_node
     end
   end
-  
-  def remove_at(index)
+
+  def remove_at(index) # rubocop:disable Metrics/MethodLength
+    if index >= size || index < -1
+      puts 'No such index'
+      return
+    end
+
     case index
     when -1
       pop
@@ -161,4 +174,8 @@ class Node
   end
 end
 
+list = LinkedList.new
+list.append('ali')
+list.append('erika')
+list.insert_at('lion', 1)
 puts list
