@@ -28,7 +28,7 @@ class LinkedList
     end
   end
 
-  def size
+  def size # rubocop:disable Metrics/MethodLength
     if head.nil?
       0
     else
@@ -43,7 +43,7 @@ class LinkedList
   end
 
   def tail
-    if size == 0
+    if size == 0 # rubocop:disable Style/NumericPredicate
       nil
     elsif size == 1
       @head
@@ -97,6 +97,19 @@ class LinkedList
     end
     nil
   end
+
+  def to_s
+    return 'nil' if size.zero?
+
+    output = ''
+    cursor = @head
+    until cursor.nil?
+      output += "( #{cursor.value} ) -> "
+      cursor = cursor.next_node
+      output += 'nil' if cursor.nil?
+    end
+    output
+  end
 end
 
 # class Node that contains a value and a link
@@ -110,8 +123,8 @@ class Node
 end
 
 list = LinkedList.new
-list.prepend(3)
-list.prepend(2)
-list.append(4)
+list.append('ali')
+list.prepend('abu')
+list.append('amzar')
 
-p list.size
+puts list
