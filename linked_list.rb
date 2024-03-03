@@ -78,12 +78,24 @@ class LinkedList
 
   def contains?(value)
     cursor = @head
-    until cursor.next_node.nil?
+    until cursor.nil?
       return true if cursor.value == value
 
       cursor = cursor.next_node
     end
     false
+  end
+
+  def find(value)
+    i = 0
+    cursor = @head
+    until cursor.nil?
+      return i if cursor.value == value
+
+      cursor = cursor.next_node
+      i += 1
+    end
+    nil
   end
 end
 
@@ -101,6 +113,5 @@ list = LinkedList.new
 list.prepend(3)
 list.prepend(2)
 list.append(4)
-list.pop
 
-p list.contains?(1)
+p list.size
