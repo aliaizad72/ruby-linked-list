@@ -66,6 +66,25 @@ class LinkedList
       cursor
     end
   end
+
+  def pop
+    to_delete = tail
+
+    new_tail = @head
+    new_tail = new_tail.next_node until new_tail.next_node == to_delete
+
+    new_tail.next_node = nil
+  end
+
+  def contains?(value)
+    cursor = @head
+    until cursor.next_node.nil?
+      return true if cursor.value == value
+
+      cursor = cursor.next_node
+    end
+    false
+  end
 end
 
 # class Node that contains a value and a link
@@ -82,4 +101,6 @@ list = LinkedList.new
 list.prepend(3)
 list.prepend(2)
 list.append(4)
+list.pop
 
+p list.contains?(1)
