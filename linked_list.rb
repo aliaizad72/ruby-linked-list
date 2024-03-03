@@ -110,6 +110,23 @@ class LinkedList
     end
     output
   end
+
+  def insert_at(value, index) # rubocop:disable Metrics/MethodLength
+    case index
+    when 0
+      prepend(value)
+    when -1
+      append(value)
+    else
+      new_node = Node.new(value)
+
+      old_node = at(index)
+      new_node_left_neighbor = at(index - 1)
+
+      new_node_left_neighbor.next_node = new_node
+      new_node.next_node = old_node
+    end
+  end
 end
 
 # class Node that contains a value and a link
@@ -119,6 +136,10 @@ class Node
   def initialize(value = nil, next_node = nil)
     @value = value
     @next_node = next_node
+  end
+
+  def to_s
+    value
   end
 end
 
