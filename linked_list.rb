@@ -27,6 +27,20 @@ class LinkedList
       @head = new_node
     end
   end
+
+  def size
+    if head.nil?
+      0
+    else
+      i = 1
+      cursor = @head
+      until cursor.next_node.nil?
+        cursor = cursor.next_node
+        i += 1
+      end
+      i
+    end
+  end
 end
 
 # class Node that contains a value and a link
@@ -44,5 +58,4 @@ list.prepend(3)
 list.prepend(2)
 list.append(4)
 
-p list
-p list.head.value
+p list.size
