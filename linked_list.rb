@@ -127,6 +127,24 @@ class LinkedList
       new_node.next_node = old_node
     end
   end
+  
+  def remove_at(index)
+    case index
+    when -1
+      pop
+    when 0
+      new_head = @head.next_node
+      @head.next_node = nil
+      @head = new_head
+    else
+      to_delete = at(index)
+      left_neighbor = at(index - 1)
+      right_neighbor = at(index + 1)
+
+      to_delete.next_node = nil
+      left_neighbor.next_node = right_neighbor
+    end
+  end
 end
 
 # class Node that contains a value and a link
@@ -142,10 +160,5 @@ class Node
     value
   end
 end
-
-list = LinkedList.new
-list.append('ali')
-list.prepend('abu')
-list.append('amzar')
 
 puts list
