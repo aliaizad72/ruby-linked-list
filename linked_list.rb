@@ -17,6 +17,16 @@ class LinkedList
       cursor.next_node = Node.new(value)
     end
   end
+
+  def prepend(value)
+    if head.nil?
+      @head = Node.new(value)
+    else
+      new_node = Node.new(value)
+      new_node.next_node = @head
+      @head = new_node
+    end
+  end
 end
 
 # class Node that contains a value and a link
@@ -28,3 +38,11 @@ class Node
     @next_node = next_node
   end
 end
+
+list = LinkedList.new
+list.prepend(3)
+list.prepend(2)
+list.append(4)
+
+p list
+p list.head.value
